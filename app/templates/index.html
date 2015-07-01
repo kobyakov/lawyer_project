@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main_block %}
+<div class="container container-height text-center">
+	<div class="jumbotron">
+		<div class="container">
+		<h1>Конструктор договоров</h1>
+			<p class="lead">Создайте необходимый документ!</p>
+			<a class="btn btn-primary btn-lg" href="{{ url_for('contracts') }}">Создать документ</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+@import 'bootstrap/less/bootstrap.less';
+
+//== Fonts
+
+@font-family-sans-serif: "Segoe UI", "Frutiger", "Dejavu Sans", Helvetica, sans-serif;
+
+
+//== Navbar
+
+@navbar-default-link-color: #fff;
+@navbar-default-link-hover-color: @gray-light;
+@navbar-default-link-hover-bg: @gray-dark;
+
+.navbar {
+	background-color: @gray;
+	border-bottom: 0;
+	border-radius: 0;
+}
+
+.navbar-default {
+	.navbar-nav {
+		a {
+			&:hover, 
+			&:focus {
+				border: 1px solid @gray-darker;
+				border-bottom: 0;
+			}
+		}
+		> .active > a {
+			background-color: #fff;
+			&:hover, 
+			&:focus {
+				background-color: #fff;
+			}
+		}
+	}
+}
+
+.nav-tabs {
+	border-bottom: 0;
+}
+
+
+//== Container upgrade
+
+.container-height {
+	padding-top: 100px;
+	min-height: 450px;
+}
+
+//== Jumbotron
+
+@jumbotron-bg: #fff;
+
+
+//== Footer
+
+@footer-font-size: 12px;
+
+.footer {
+	font-size: @footer-font-size;
+	border: 1px solid @gray-light;
+	background-color: @gray-lighter;
+}
+
+//==Contract
+
+@a4width: 210px;
+@a4height: 297px;
+
+.contract {
+	min-height: 500px;
+}
+.contract-menu {
+	border-right: 1px solid @gray-light;
+}
+
+.contract-footer {
+	min-height: 50px;
+}
+.contract-substr {
+	padding-left: 0;
+	margin-left: 0;
+	background-color: @gray-darker;
+}
+.contract-template {
+	
+	width: 3*@a4width;
+	height: 1*@a4height;
+	background-color: #fff;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+}
+
+//== Menu (for jQuery)
+.menu-hidden {
+	display: none;
+}
