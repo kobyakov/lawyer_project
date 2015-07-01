@@ -1,5 +1,21 @@
 @import 'bootstrap/less/bootstrap.less';
 
+// == Variables
+
+@footer-height: 100px;
+
+// == Main styles
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: @footer-height;
+}
+
 //== Fonts
 
 @font-family-sans-serif: "Segoe UI", "Frutiger", "Dejavu Sans", Helvetica, sans-serif;
@@ -52,12 +68,15 @@
 
 @jumbotron-bg: #fff;
 
-
 //== Footer
 
 @footer-font-size: 12px;
 
 .footer {
+	position: absolute;
+  	bottom: 0;
+  	width: 100%;
+  	height: @footer-height;
 	font-size: @footer-font-size;
 	border: 1px solid @gray-light;
 	background-color: @gray-lighter;
