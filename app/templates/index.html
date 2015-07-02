@@ -2,11 +2,18 @@
 {% block main_block %}
 <div class="container container-height text-center">
 	<div class="jumbotron">
-		<div class="container">
-		<h1>Конструктор договоров</h1>
+		<h1>TheSmartLawyer</h1>
+		<div>
+		<h2>Для людей</h2>
 			<p class="lead">Создайте необходимый документ!</p>
 			<a class="btn btn-primary btn-lg" href="{{ url_for('contracts') }}">Создать документ</a>
 		</div>
+		<div>
+			<h2>Для компаний</h2>
+			<p class="lead">Начните работу с системой TheSmartLawyer!</p>
+			<a class="btn btn-success btn-lg" href="{{ url_for('contracts') }}">Войти/Зарегистрироваться</a>
+		</div>
+
 	</div>
 </div>
 {% endblock %}
