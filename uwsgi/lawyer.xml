@@ -1,0 +1,8 @@
+<uwsgi>
+    <socket>/tmp/lawyer.sock</socket>
+    <pythonpath>/var/wsgi/lawyer/</pythonpath>
+    <module>wsgi:app</module>
+    <plugins>python27</plugins>
+    <virtualenv>/var/wsgi/lawyer/flask/</virtualenv>
+</uwsgi>
+
