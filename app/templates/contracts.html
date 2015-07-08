@@ -1,6 +1,15 @@
 {% extends "base.html"%}
-{% block content %}
+{% block main_block %}
 	<div>
 		Create and edit contracts!
+	</div>
+	<div>
+	{% if categories %}
+		{% for category in categories %}
+		<p>{{category.name}}</p>
+		{% endfor %}
+	{% else %}
+		<p>No categories</p>
+	{% endif %}
 	</div>
 {% endblock %}

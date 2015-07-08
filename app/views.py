@@ -1,4 +1,5 @@
-from app import app
+from app import app, db
+from models import Category
 from flask import render_template, url_for
 @app.route('/')
 @app.route('/index')
@@ -15,6 +16,8 @@ def about():
 
 @app.route('/contracts')
 def contracts():
+	categories = Category.query.all()
 	return render_template(
 		'contracts.html',
-		title = 'Contracts',)
+		title = 'Contracts',
+		categories = categories)
