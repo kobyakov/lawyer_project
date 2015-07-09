@@ -6,15 +6,11 @@ ROLE_ADMIN = 1
 
 class Category(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
-	name = db.Column(db.String(128, collation='utf8_general_ci'), index=True, unique=True)
-	slug = db.Column(db.String(128, collation='utf8_general_ci'),index=True, unique=True)
+	name = db.Column(db.String(128), index=True, unique=True)
+	slug = db.Column(db.String(128),index=True, unique=True)
 
 	def __repr__(self):
 		return '<category %r>' %(self.name)
-
-	@property
-	def slug(self):
-		return urlify(self.name)
 
 #class Type(models.Model):
 #	type_category = models.ForeignKey(Category)

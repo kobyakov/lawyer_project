@@ -1,6 +1,12 @@
 from app import app, db
 from models import Category
-from flask import render_template, url_for
+from forms import AddForm
+
+from flask import render_template, url_for, flash, redirect
+
+from webhelpers.text import urlify
+from transliterate import translit
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -21,3 +27,23 @@ def contracts():
 		'contracts.html',
 		title = 'Contracts',
 		categories = categories)
+
+@app.route('/add', methods = ['GET', 'POST'])
+def add():
+	addform = AddForm()
+	if addform.validate_on_submit():
+		name = addform.name.data
+		slug = urlify(translit(name, 'ru', reversed = True))
+		new_category = Category(
+			name=name,
+			slug = slug)
+		db.session.add(new_category)
+		db.session.commit()
+		flash('OK')
+		return redirect('/index')
+	return render_template('add.html',
+		title='Add',
+		form = addform)
+
+@app.route('/kobyakov')
+	return render_template('kobyakov.html')
