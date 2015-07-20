@@ -2,10 +2,11 @@
 {% block main_block %}
 <div class="container-fluid container-height">
 	<h1>Добавить категорию</h1>
-	<form action="" method="post" name="add">
+	<form action="" method="post" name="addcategory">
 		{{ form.hidden_tag() }}
 		<p>Name: {{form.name(size=80)}}</p>
 		<br>
+		<p>Is contract: {{form.is_contract}}</p>
 		<p><input type="submit" value="Add"></p>
 	</form>
 </div>

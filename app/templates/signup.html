@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block main_block %}
+	<h2>Sign up</h2>
+	
+	{% for message in form.username.errors %}
+    <div class="flash">{{ message }}</div>
+  	{% endfor %}  	 
+  	{% for message in form.email.errors %}
+    <div class="flash">{{ message }}</div>
+  	{% endfor %}   
+  	{% for message in form.password.errors %}
+    <div class="flash">{{ message }}</div>
+  	{% endfor %}
+   
+  	<form action="{{ url_for('signup') }}" method=post>
+    	{{ form.hidden_tag() }}   
+    	<p>E-mail (будет использоваться в качестве логина): {{ form.email }}</p>  
+    	<br>
+    	<p>ФИО: {{ form.username }}</p>   	
+       	<br>     
+    	<p>Пароль: {{ form.password }}</p>
+    	<br>     
+    	{{ form.submit }}
+  	</form>
+{% endblock %}

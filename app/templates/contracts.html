@@ -4,12 +4,31 @@
 		Create and edit contracts!
 	</div>
 	<div>
-	{% if categories %}
+		<h4>Categories</h4>
+		{% if categories %}
 		{% for category in categories %}
 		<p>{{category.name}}</p>
 		{% endfor %}
-	{% else %}
+		{% else %}
 		<p>No categories</p>
-	{% endif %}
+		{% endif %}
+
+		<h4>Types</h4>
+		{% if types %}
+		{% for type in types %}
+		<p>{{type.name}}</p>
+		{% endfor %}
+		{% else %}
+		<p>No types</p>
+		{% endif %}
+
+		<h4>Contracts</h4>
+		{% if contracts %}
+		{% for contract in contracts %}
+		<p>{{contract.name}}</p>
+		{% endfor %}
+		{% else %}
+		<p>No contracts</p>
+		{% endif %}
 	</div>
 {% endblock %}

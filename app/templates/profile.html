@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block main_block %}
+<div class="container-fluid container-height">
+	<h1>Профиль</h1>
+	<p>Это страница профиля пользователя {{ session['email'] }}</p>
+</div>
+{% endblock %}
