@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
 {% block main_block %}
-<div class="container container-height text-center">
-	<div class="jumbotron">
-		<h1>Intellawyer</h1>
+<div class = "container-img">
+<div class="container text-center">
+	<div class="jumbotron jumbotron-mid">
+		<h1><small>Intellawyer</small></h1>
 		<div>
-		<h2>Для людей</h2>
-			<p class="lead">Создайте необходимый документ!</p>
-			<a class="btn btn-primary btn-lg" href="{{ url_for('contracts') }}">Создать документ</a>
-		</div>
-		<div>
-			<h2>Для компаний</h2>
 			<p class="lead">Начните работу с системой TheSmartLawyer!</p>
-			<a class="btn btn-success btn-lg" href="{{ url_for('contracts') }}">Войти/Зарегистрироваться</a>
+			<a class="btn btn-default btn-lg" href="{{ url_for('contracts') }}">Создать документ</a>
+			<a class="btn btn-info btn-lg" href="{{ url_for('login') }}">Зарегистрироваться</a>
 		</div>
 
 	</div>
+</div>
 </div>
 {% endblock %}

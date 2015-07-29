@@ -4524,23 +4524,23 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {
-  color: #ffffff;
+  color: #777777;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #e6e6e6;
+  color: #5e5e5e;
   background-color: transparent;
 }
 .navbar-default .navbar-text {
   color: #777777;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #ffffff;
+  color: #777777;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #777777;
-  background-color: #333333;
+  color: #333333;
+  background-color: transparent;
 }
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
@@ -4576,12 +4576,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #ffffff;
+    color: #777777;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #777777;
-    background-color: #333333;
+    color: #333333;
+    background-color: transparent;
   }
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
@@ -4597,17 +4597,17 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default .navbar-link {
-  color: #ffffff;
-}
-.navbar-default .navbar-link:hover {
   color: #777777;
 }
+.navbar-default .navbar-link:hover {
+  color: #333333;
+}
 .navbar-default .btn-link {
-  color: #ffffff;
+  color: #777777;
 }
 .navbar-default .btn-link:hover,
 .navbar-default .btn-link:focus {
-  color: #777777;
+  color: #333333;
 }
 .navbar-default .btn-link[disabled]:hover,
 fieldset[disabled] .navbar-default .btn-link:hover,
@@ -6500,7 +6500,9 @@ button.close {
 .panel-body:before,
 .panel-body:after,
 .modal-footer:before,
-.modal-footer:after {
+.modal-footer:after,
+.navbar:before,
+.navbar:after {
   content: " ";
   display: table;
 }
@@ -6518,7 +6520,8 @@ button.close {
 .navbar-collapse:after,
 .pager:after,
 .panel-body:after,
-.modal-footer:after {
+.modal-footer:after,
+.navbar:after {
   clear: both;
 }
 .center-block {
@@ -6767,67 +6770,208 @@ button.close {
 html {
   position: relative;
   min-height: 100%;
+  height: 100%;
 }
 body {
-  margin-bottom: 100px;
+  height: 100%;
+  min-height: 100%;
 }
 .navbar {
-  background-color: #555555;
-  border-bottom: 0;
-  border-radius: 0;
+  position: relative;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 0px;
 }
-.navbar-default .navbar-nav a:hover,
-.navbar-default .navbar-nav a:focus {
-  border: 1px solid #222222;
-  border-bottom: 0;
+@media (min-width: 768px) {
+  .navbar {
+    border-radius: 4px;
+  }
 }
-.navbar-default .navbar-nav > .active > a {
-  background-color: #fff;
+/*
+@navbar-default-link-color: #fff;
+@navbar-default-link-hover-color: @gray-light;
+@navbar-default-link-hover-bg: @gray-dark;
+
+
+*/
+/*
+.navbar {
+	//background-color: @gray;
+	border-bottom: 0;
+	border-radius: 0;
 }
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
-  background-color: #fff;
+
+.navbar-default {
+	.navbar-nav {
+		a {
+			&:hover, 
+			&:focus {
+				//border: 1px solid @gray-darker;
+				border-bottom: 0;
+			}
+		}
+		> .active > a {
+			background-color: #fff;
+			&:hover, 
+			&:focus {
+				background-color: #fff;
+			}
+		}
+	}
 }
+
 .nav-tabs {
-  border-bottom: 0;
+	border-bottom: 0;
 }
+
+
+//== Container upgrade
+*/
 .container-height {
   padding-top: 100px;
   min-height: 450px;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
+.container-main {
+  min-height: 100%;
+  height: 100%;
+}
+.container-img {
+  margin-top: -20px;
+  position: relative;
+  background: #000000 url("/static/img/index_bg.jpg") center center;
   width: 100%;
-  height: 100px;
-  font-size: 12px;
-  border: 1px solid #777777;
-  background-color: #eeeeee;
+  height: 100%;
+  background-size: cover;
+  overflow: hidden;
 }
-.contract {
-  min-height: 500px;
+.jumbotron-mid {
+  margin-top: 20%;
+  vertical-align: middle;
+  opacity: 0.7;
 }
-.contract-menu {
-  border-right: 1px solid #777777;
+.jumbotron > .btn {
+  opacity: 1;
 }
-.contract-footer {
-  min-height: 50px;
-}
-.contract-substr {
-  padding-left: 0;
-  margin-left: 0;
+.footer {
+  padding: 10px;
+  width: 100%;
+  background-top: 1px solid #555555;
+  border: 1px solid black;
+  color: #777777;
   background-color: #222222;
 }
-.contract-template {
-  width: 630px;
-  height: 297px;
-  background-color: #fff;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  margin-left: auto;
-  margin-right: auto;
+.form-signin {
+  max-width: 350px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   padding: 10px;
+  font-size: 16px;
 }
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-register {
+  max-width: 350px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-register .form-register-heading,
+.form-register-heading .checkbox {
+  margin-bottom: 10px;
+}
+.form-register .checkbox {
+  font-weight: normal;
+}
+.form-register .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-register .form-control:focus {
+  z-index: 2;
+}
+.form-register .form-control-top {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-register .form-control-bottom {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-register .form-control-mid {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*
+
+//==Contract
+
+@a4width: 210px;
+@a4height: 297px;
+
+.contract {
+	min-height: 500px;
+}
+.contract-menu {
+	border-right: 1px solid @gray-light;
+}
+
+.contract-footer {
+	min-height: 50px;
+}
+.contract-substr {
+	padding-left: 0;
+	margin-left: 0;
+	background-color: @gray-darker;
+}
+.contract-template {
+	
+	width: 3*@a4width;
+	height: 1*@a4height;
+	background-color: #fff;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 10px;
+}
+
+//== Menu (for jQuery)
 .menu-hidden {
-  display: none;
+	display: none;
 }
+*/

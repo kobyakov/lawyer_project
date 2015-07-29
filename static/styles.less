@@ -1,5 +1,6 @@
 @import 'bootstrap/less/bootstrap.less';
 
+
 // == Variables
 
 @footer-height: 100px;
@@ -10,10 +11,13 @@
 html {
   position: relative;
   min-height: 100%;
+  height: 100%;
 }
 
 body {
-  margin-bottom: @footer-height;
+  //margin-bottom: @footer-height;
+  height:100%;
+  min-height: 100%;
 }
 
 //== Fonts
@@ -23,12 +27,21 @@ body {
 
 //== Navbar
 
+.navbar-noradius {
+  .navbar;
+  border-radius: 0px;
+}
+/*
 @navbar-default-link-color: #fff;
 @navbar-default-link-hover-color: @gray-light;
 @navbar-default-link-hover-bg: @gray-dark;
 
+
+*/
+
+/*
 .navbar {
-	background-color: @gray;
+	//background-color: @gray;
 	border-bottom: 0;
 	border-radius: 0;
 }
@@ -38,7 +51,7 @@ body {
 		a {
 			&:hover, 
 			&:focus {
-				border: 1px solid @gray-darker;
+				//border: 1px solid @gray-darker;
 				border-bottom: 0;
 			}
 		}
@@ -58,29 +71,140 @@ body {
 
 
 //== Container upgrade
-
+*/
 .container-height {
 	padding-top: 100px;
 	min-height: 450px;
+}
+
+.container-main {
+  min-height: 100%;
+  height: 100%;
+}
+
+.container-img {
+    margin-top: -20px;
+    position: relative;
+    background: #000 url("/static/img/index_bg.jpg") center center;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
 }
 
 //== Jumbotron
 
 @jumbotron-bg: #fff;
 
+.jumbotron-mid {
+  margin-top: 20%;
+  //display: inline-block;
+  vertical-align: middle;
+  opacity: 0.7;
+}
+
+.jumbotron > .btn {
+  opacity: 1;
+}
+
 //== Footer
 
 @footer-font-size: 12px;
-
+@footer-color: #777777;
+@footer-background: #222222;
 .footer {
-	position: absolute;
-  	bottom: 0;
-  	width: 100%;
-  	height: @footer-height;
-	font-size: @footer-font-size;
-	border: 1px solid @gray-light;
-	background-color: @gray-lighter;
+  padding: 10px;
+  width: 100%;
+  background-top: 1px solid @gray;
+  border: 1px solid black;
+  //height: @footer-height;
+	//font-size: @footer-font-size;
+  color: @footer-color;
+  background-color: @footer-background;
 }
+
+//==Login
+.form-signin {
+  max-width: 350px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+//==Register
+
+.form-register {
+  max-width: 350px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-register .form-register-heading,
+.form-register-heading .checkbox {
+  margin-bottom: 10px;
+}
+.form-register .checkbox {
+  font-weight: normal;
+}
+.form-register .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-register .form-control:focus {
+  z-index: 2;
+}
+
+.form-register .form-control-top {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-register .form-control-bottom {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.form-register .form-control-mid {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+/*
 
 //==Contract
 
@@ -118,3 +242,4 @@ body {
 .menu-hidden {
 	display: none;
 }
+*/
