@@ -5,8 +5,7 @@ from wtforms import TextField, BooleanField, SelectField, PasswordField, SubmitF
 from wtforms.validators import Required, Email
 from models import db, User
 
-class SignupForm(Form):
-	username = TextField("Username",  [Required("Please enter your username.")])
+class RegisterForm(Form):
 	email = TextField("Email",  [Required("Please enter your email address."), Email("Please enter your email address.")])
 	password = PasswordField('Password', [Required("Please enter a password.")])
 	submit = SubmitField("Create account")	
@@ -24,7 +23,7 @@ class SignupForm(Form):
 		else:
 			return True
 
-class SigninForm(Form):
+class LoginForm(Form):
 	email = TextField("Email",  [Required("Please enter your email address."), Email("Please enter your email address.")])
 	password = PasswordField('Password', [Required("Please enter a password.")])
 	submit = SubmitField("Sign In")

@@ -1,13 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from app import app, db
+from app import app, db, login_manager
 from models import Category, Type, Contract, User
-from forms import AddCategory, AddType, AddContract, SignupForm, SigninForm
+from forms import AddCategory, AddType, AddContract, RegisterForm, LoginForm
 
-from flask import render_template, url_for, flash, redirect, request, session
+from flask import render_template, url_for, flash, redirect, request, session, g
+from flask.ext.login import login_user, logout_user, current_user, login_required
 
 from webhelpers.text import urlify
 from transliterate import translit
+
+@login_manager.user_loader
+def user_loader(user_id):
+	return User.query.get(user_id)
+
+@app.before_request
+def before_request():
+    g.user = current_user
 
 @app.route('/')
 @app.route('/index')
@@ -17,53 +26,86 @@ def index():
 		title = u'Конструктор договоров онлайн',
 		active = 'index')
 
-@app.route('/signup', methods = ['GET', 'POST'])
-def signup():
-	form = SignupForm()
+@app.route('/register', methods = ['GET', 'POST'])
+def register():
+	form = RegisterForm()
 
-	if request.method == 'POST':
-		if form.validate() == False:
-			return render_template('signup.html', form=form)
-		else:
-			user = User(form.username.data, form.password.data, form.email.data)
-			db.session.add(user)
-			db.session.commit()
-			session['email'] = user.email
-			return redirect(url_for('profile'))
-	elif request.method == 'GET':
-		return render_template('signup.html', form=form)
-
-@app.route('/signin', methods = ['GET', 'POST'])
-def signin():
-	form = SigninForm()
-
-	if request.method == 'POST':
-		if form.validate() == False:
-			return render_template('signin.html', form=form)
-		else:
-			session['email'] = form.email.data
-			return redirect(url_for('profile'))
-                 
-	elif request.method == 'GET':
-		return render_template('signin.html', form=form)
-
-@app.route('/signout')
-def signout():
- 	if 'email' not in session:
-		return redirect(url_for('signin'))
-     
-	session.pop('email', None)
-	return redirect(url_for('index'))
-
-@app.route('/profile')
-def profile():
-	if 'email' not in session:
-		return redirect(url_for('signin'))
-	user = User.query.filter_by(email = session['email']).first()
-	if user is None:
-		return redirect(url_for('signin'))
+	if form.validate_on_submit():
+		#if User.query.filter_by(email = self.email.data.lower()).first():
+		#	form.email.errors.append("That email is already taken")
+		#	return False
+		user = User(form.email.data, form.password.data)
+		db.session.add(user)
+		db.session.commit()
+		flash('User successfully registered')
+		return redirect(url_for('index'))
 	else:
-		return render_template('profile.html')
+		return render_template('register.html', form=form)
+		
+	#if request.method == 'POST':
+	#	if form.validate() == False:
+	#		return render_template('signup.html', form=form)
+	#	else:
+	#		user = User(form.username.data, form.password.data, form.email.data)
+	#		db.session.add(user)
+	#		db.session.commit()
+	#		session['email'] = user.email
+	#		return redirect(url_for('profile'))
+	#elif request.method == 'GET':
+	#	return render_template('signup.html', form=form)
+
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+	if g.user is not None and g.user.is_authenticated():
+		return redirect(url_for('index'))
+	
+	form = LoginForm()
+
+	if form.validate_on_submit():
+		user = User.query.filter_by(email = form.email.data.lower()).first()
+		if user:
+			if user.check_password(form.password.data):
+				login_user(user, remember = True)
+				return redirect(url_for("index"))
+			else:
+				form.email.password.append("Password is not valid")
+		else:
+			form.email.errors.append("This user is not exists")
+		return render_template('login.html', form=form)
+	else:
+		return render_template('login.html', form=form)
+	#if request.method == 'POST':
+	#	if form.validate() == False:
+	#		return render_template('signin.html', form=form)
+	#	else:
+	#		session['email'] = form.email.data
+	#		return redirect(url_for('profile'))
+    #             
+	#elif request.method == 'GET':
+	#	return render_template('signin.html', form=form)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+	logout_user()
+	return render_template("index.html")
+ 	#if 'email' not in session:
+	#	return redirect(url_for('signin'))
+    # 
+	#session.pop('email', None)
+	#return redirect(url_for('index'))
+
+#@app.route('/profile')
+#@login_required
+#def profile():
+#	if '' not in session:
+#		return redirect(url_for('signin'))
+#	user = User.query.filter_by(email = session['email']).first()
+#	if user is None:
+#		return redirect(url_for('signin'))
+#	else:
+#		return render_template('profile.html')
 
 @app.route('/about')
 def about():
@@ -86,6 +128,7 @@ def contracts():
 		contracts = Contract.query.all())
 
 @app.route('/addcategory', methods = ['GET', 'POST'])
+@login_required
 def addcategory():
 	addform = AddCategory()
 	if addform.validate_on_submit():
@@ -105,6 +148,7 @@ def addcategory():
 		form = addform)
 
 @app.route('/addtype', methods = ['GET', 'POST'])
+@login_required
 def addtype():
 	addform = AddType()
 	addform.category.choices = [(c.id, c.name) for c in Category.query.all()]
@@ -128,6 +172,7 @@ def addtype():
 		form = addform) 
 
 @app.route('/addcontract', methods = ['GET', 'POST'])
+@login_required
 def addcontract():
 	addform = AddContract()
 	addform.type_.choices = [(t.id, t.name) for t in Type.query.all()]

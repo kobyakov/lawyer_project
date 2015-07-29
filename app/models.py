@@ -12,6 +12,7 @@ class Category(db.Model):
 	slug = db.Column(db.String(128),index=True, unique=True)
 	is_contract = db.Column(db.Boolean, default = False)
 	types = db.relationship('Type', backref = 'category', lazy = 'dynamic')
+	
 	def __repr__(self):
 		return '<category %r>' %(self.name)
 
@@ -39,17 +40,25 @@ class Contract(db.Model):
 
 class User(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
-	username = db.Column(db.String(40), unique = True, index = True)
-	password_hash = db.Column(db.String(40))
 	email = db.Column(db.String(60), unique = True, index = True)
-	registered_on = db.Column(db.DateTime)
+	password_hash = db.Column(db.String(20), unique = True)
 
-	def __init__(self, username, password, email):
-		self.username = username
+	def __init__(self, email, password):
 		self.email = email.lower()
-		self.registered_on = datetime.utcnow()
 		self.set_password(password)
 
+	def is_authenticated(self):
+		return True
+	
+	def is_active(self):
+		return True
+	
+	def is_anonymous(self):
+		return False
+	
+	def get_id(self):
+		return unicode(self.id)
+	
 	def set_password(self, password):
 		self.password_hash = generate_password_hash(password)
 
