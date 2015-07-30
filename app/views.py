@@ -89,7 +89,7 @@ def login():
 @login_required
 def logout():
 	logout_user()
-	return render_template("index.html")
+	return redirect(url_for('index'))
  	#if 'email' not in session:
 	#	return redirect(url_for('signin'))
     # 
@@ -115,17 +115,40 @@ def about():
 		active = 'about')
 
 @app.route('/contracts')
-def contracts():
-	categories = Category.query.all()
-	types = Type.query.all()
-	contracts = Contract.query.all()
-	return render_template(
-		'contracts.html',
-		title = u'Создать документ',
-		active = 'contracts',
-		categories = Category.query.all(),
-		types = Type.query.all(),
-		contracts = Contract.query.all())
+@app.route('/contracts/<_category>')
+@app.route('/contracts/<_category>/<_type>')
+@app.route('/contracts/<_category>/<_type>/<_contract>')
+def contracts(_category=None, _type=None, _contract=None):
+	if not _category and not _type and not _contract:
+		categories = Category.query.all()	
+		return render_template(
+			'contracts.html',
+			title = u'Создать документ',
+			active = 'contracts',
+			categories = Category.query.all())
+	if _category and not _type and not _contract:
+		types = Type.query.\
+			filter(Type.category_id==Category.id).\
+			filter(Category.slug==_category)
+		return render_template(
+			'contracts.html',
+			title = u'Создать документ',
+			active = 'contracts',
+			_category = _category,
+			types = types)
+	if _category and _type and not _contract:
+		contracts = Contract.query.\
+			filter(Contract.type_id==Type.id).\
+			filter(Type.slug==_type)
+		return render_template(
+			'contracts.html',
+			title = u'Создать документ',
+			active = 'contracts',
+			_category = _category,
+			_type = _type,
+			contracts = contracts)
+	if _category and _type and _contract:
+		return('OK')
 
 @app.route('/addcategory', methods = ['GET', 'POST'])
 @login_required
@@ -142,7 +165,7 @@ def addcategory():
 		db.session.add(new_category)
 		db.session.commit()
 		flash('OK')
-		return redirect('/index')
+		return redirect('/addcategory')
 	return render_template('addcategory.html',
 		title=u'Добавить категорию',
 		form = addform)
@@ -166,7 +189,7 @@ def addtype():
 		db.session.add(new_type)
 		db.session.commit()
 		flash('OK')
-		return redirect('/index')
+		return redirect('/addtype')
 	return render_template('addtype.html',
 		title = u'Добавить тип',
 		form = addform) 
@@ -189,7 +212,7 @@ def addcontract():
 		db.session.add(new_contract)
 		db.session.commit()
 		flash('OK')
-		return redirect('/index')
+		return redirect('/addcontract')
 	return render_template('addcontract.html',
 		title = u'Добавить документ',
 		form = addform) 
