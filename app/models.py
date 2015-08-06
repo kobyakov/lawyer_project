@@ -3,8 +3,8 @@ from webhelpers.text import urlify
 from werkzeug import generate_password_hash, check_password_hash
 from datetime import datetime
 
-ROLE_USER = 0
-ROLE_ADMIN = 1
+ROLE_USER = 'user'
+ROLE_ADMIN = 'admin'
 
 class Category(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
@@ -42,6 +42,7 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	email = db.Column(db.String(60), unique = True, index = True)
 	password_hash = db.Column(db.String(20), unique = True)
+	role = db.Column(db.String(10), default = ROLE_USER)
 
 	def __init__(self, email, password):
 		self.email = email.lower()

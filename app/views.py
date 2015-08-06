@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from app import app, db, login_manager
-from models import Category, Type, Contract, User
+from app import app, db, login_manager, principals, admin_permission, be_admin
+from models import Category, Type, Contract, User, ROLE_ADMIN, ROLE_USER
 from forms import AddCategory, AddType, AddContract, RegisterForm, LoginForm
 
 from flask import render_template, url_for, flash, redirect, request, session, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
+from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_loaded, identity_changed
 
 from webhelpers.text import urlify
 from transliterate import translit
@@ -17,6 +18,18 @@ def user_loader(user_id):
 @app.before_request
 def before_request():
     g.user = current_user
+
+@identity_loaded.connect_via(app)
+def on_identity_loaded(sender, identity):
+	needs = []
+	if identity.id in ('admin'):
+		needs.append(be_admin)
+	for n in needs:
+		identity.provides.add(n)
+
+@app.errorhandler(403)
+def authorisation_failed(e):
+    return ('Authorisation_failed')
 
 @app.route('/')
 @app.route('/index')
@@ -66,6 +79,9 @@ def login():
 		if user:
 			if user.check_password(form.password.data):
 				login_user(user, remember = True)
+				if user.role == ROLE_ADMIN:
+					identity = Identity(ROLE_ADMIN)
+					identity_changed.send(app, identity=identity)
 				return redirect(url_for("index"))
 			else:
 				form.email.password.append("Password is not valid")
@@ -89,6 +105,9 @@ def login():
 @login_required
 def logout():
 	logout_user()
+	for key in ['identity.id', 'identity.auth_type']:
+		session.pop(key, None)
+	#identity_changed.send(app, identity=AnonymousIdentity())
 	return redirect(url_for('index'))
  	#if 'email' not in session:
 	#	return redirect(url_for('signin'))
@@ -96,16 +115,14 @@ def logout():
 	#session.pop('email', None)
 	#return redirect(url_for('index'))
 
-#@app.route('/profile')
-#@login_required
-#def profile():
-#	if '' not in session:
-#		return redirect(url_for('signin'))
-#	user = User.query.filter_by(email = session['email']).first()
-#	if user is None:
-#		return redirect(url_for('signin'))
-#	else:
-#		return render_template('profile.html')
+@app.route('/profile')
+@login_required
+def profile():
+	user = User.query.filter_by(email = session['email']).first()
+	if user is None:
+		return redirect(url_for('signin'))
+	else:
+		return render_template('profile.html')
 
 @app.route('/about')
 def about():
@@ -152,6 +169,7 @@ def contracts(_category=None, _type=None, _contract=None):
 
 @app.route('/addcategory', methods = ['GET', 'POST'])
 @login_required
+@admin_permission.require(http_exception=403)
 def addcategory():
 	addform = AddCategory()
 	if addform.validate_on_submit():
