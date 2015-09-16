@@ -17,7 +17,7 @@
 	</head>
 	<body>
 	<!--<div class = "container">-->
-		<nav class="navbar navbar-inverse navbar-noradius">
+		<nav class="navbar navbar-default navbar-noradius">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="{{ url_for('index') }}">
@@ -37,7 +37,7 @@
 					</ul>	
 					<div class = "navbar-right">
 						{% if g.user.is_authenticated() %}
-						<p class = "navbar-text">{{g.user.email}}</p>
+						<p class = "navbar-text"><a href = "{{ url_for('profile') }}">{{g.user.email}}</a></p>
 						<a href = "{{ url_for('logout') }}"><button type="button" class="btn btn-default navbar-btn">Выйти</button></a>
 						{% else %}
 						<a href = "{{ url_for('login') }}"><button type="button" class="btn btn-default navbar-btn">Войти</button></a>
@@ -50,6 +50,7 @@
 		
 			{% block main_block %}
 			{% endblock %}
+			
 		<div class="footer text-center">
 			<div class="container">
 			<span>

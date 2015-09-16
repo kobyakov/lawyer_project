@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
-{% block main_block %}
-<div class="container-fluid container-height">
-	<h1>Добавить категорию</h1>
+{% extends 'manage.html' %}
+{% block manage_block %}
+
+	<h3>Добавить категорию</h3>
 	<form action="" method="post" name="addcategory">
 		{{ form.hidden_tag() }}
 		<p>Name: {{form.name(size=80)}}</p>
@@ -9,5 +9,5 @@
 		<p>Is contract: {{form.is_contract}}</p>
 		<p><input type="submit" value="Add"></p>
 	</form>
-</div>
+
 {% endblock %}

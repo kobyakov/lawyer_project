@@ -4,13 +4,13 @@ from app import app, db, login_manager, principals, admin_permission, be_admin
 from models import Category, Type, Contract, User, ROLE_ADMIN, ROLE_USER
 from forms import AddCategory, AddType, AddContract, RegisterForm, LoginForm
 
-from flask import render_template, url_for, flash, redirect, request, session, g
+from flask import render_template, send_from_directory, url_for, flash, redirect, request, session, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_loaded, identity_changed
 
 from webhelpers.text import urlify
 from transliterate import translit
-
+import os
 @login_manager.user_loader
 def user_loader(user_id):
 	return User.query.get(user_id)
@@ -118,11 +118,11 @@ def logout():
 @app.route('/profile')
 @login_required
 def profile():
-	user = User.query.filter_by(email = session['email']).first()
+	user = User.query.filter_by(email = g.user.email).first()
 	if user is None:
-		return redirect(url_for('signin'))
+		return redirect(url_for('login'))
 	else:
-		return render_template('profile.html')
+		return render_template('profile.html', user=user)
 
 @app.route('/about')
 def about():
@@ -165,9 +165,21 @@ def contracts(_category=None, _type=None, _contract=None):
 			_type = _type,
 			contracts = contracts)
 	if _category and _type and _contract:
-		return('OK')
+		contract = Contract.query.filter(Contract.slug==_contract).first()
+		return render_template(
+			'editor.html',
+			title = u'Редактировать документ',
+			active = 'contracts',
+			contract_template = contract.contract_template,)
 
-@app.route('/addcategory', methods = ['GET', 'POST'])
+@app.route('/manage')
+@login_required
+@admin_permission.require(http_exception=403)
+def manage():
+	return render_template('manage.html')
+
+
+@app.route('/manage/addcategory', methods = ['GET', 'POST'])
 @login_required
 @admin_permission.require(http_exception=403)
 def addcategory():
@@ -186,10 +198,12 @@ def addcategory():
 		return redirect('/addcategory')
 	return render_template('addcategory.html',
 		title=u'Добавить категорию',
+		active='addcat',
 		form = addform)
 
 @app.route('/addtype', methods = ['GET', 'POST'])
 @login_required
+@admin_permission.require(http_exception=403)
 def addtype():
 	addform = AddType()
 	addform.category.choices = [(c.id, c.name) for c in Category.query.all()]
@@ -210,10 +224,12 @@ def addtype():
 		return redirect('/addtype')
 	return render_template('addtype.html',
 		title = u'Добавить тип',
+		active = 'addtyp',
 		form = addform) 
 
 @app.route('/addcontract', methods = ['GET', 'POST'])
 @login_required
+@admin_permission.require(http_exception=403)
 def addcontract():
 	addform = AddContract()
 	addform.type_.choices = [(t.id, t.name) for t in Type.query.all()]
@@ -233,7 +249,13 @@ def addcontract():
 		return redirect('/addcontract')
 	return render_template('addcontract.html',
 		title = u'Добавить документ',
+		active = 'addcon',
 		form = addform) 
+
+@app.route('/save_contract')
+def save_contract():
+	filename = 'test.txt'
+	return send_from_directory(directory=app.config['UPLOAD_FOLDER'], filename=filename, as_attachment=True)	
 
 @app.route('/kobyakov')
 def kobyakov():

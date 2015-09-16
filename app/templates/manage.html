@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block main_block %}
+<div class="container-fluid">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-stacked ">
+          {% if active == 'addcat' %}<li class="active">{% else %}<li>{% endif %}<a href="{{ url_for('addcategory') }}">Добавить категорию</a></li>
+          {% if active == 'addtyp' %}<li class="active">{% else %}<li>{% endif %}<a href="{{ url_for('addtype') }}">Добавить тип</a></li>
+          {% if active == 'addcon' %}<li class="active">{% else %}<li>{% endif %}<a href="{{ url_for('addcontract') }}">Добавить контракт</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% block manage_block %}
+        {% endblock %}                    
+      </div>
+</div>
+{% endblock %}
