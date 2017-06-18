@@ -1,17 +1,83 @@
 {% extends 'base.html' %}
 {% block main_block %}
 <div class="container-fluid">
-	<div class="contract-substr contract">
+<!--<div class="contract-substr contract">
 		<div class="clearfix"></div>
-		<div class="contract-template">
-			{%if contract_template %}
-				{% include contract_template %}
-			{% else %}
-			<p>Область для редактирования договора</p>
-			{% endif %}
-		</div>
+		<div class="contract-template">-->
+			<div id = "froala-editor" style="">
+				{% include 'contracts/sale-avto.html' %}
+			</div>
+			<button type="button" class="btn btn-default navbar-btn" id="froala-saver">Сохранить</button>
+			<a class="btn btn-info btn-lg" href="/download">Создать документ</a>
+			<!-- Include external JS libs. -->
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+		
+			<!-- Include Editor JS files. -->
+			<script type="text/javascript" src="static/js/froala_editor.pkgd.min.js"></script>
+			<script type="text/javascript" src="/static/js/plugins/save.min.js"></script>
+			
+			<!-- Initialize the editor. -->
+			<script> 
+				$(function() {		
+					$.FroalaEditor.DefineIcon('clear', {NAME: 'remove'});
+					$.FroalaEditor.RegisterCommand('clear', {
+					title: 'Clear HTML',
+					focus: false,
+					undo: true,
+					refreshAfterCallback: true,
+					callback: function () {
+						this.html.set('');
+						this.events.focus();
+					}
+					});
+				
+					$.FroalaEditor.DefineIcon('insert', {NAME: 'plus'});
+					$.FroalaEditor.RegisterCommand('insert', {
+					title: 'Insert HTML',
+					focus: true,
+					undo: true,
+					refreshAfterCallback: true,
+					callback: function () {
+						this.html.insert('My New HTML');
+					}
+					});
+			
+					$('div#froala-editor').froalaEditor({
+					// Add the custom buttons in the toolbarButtons list, after the separator.
+					toolbarBottom: true,
+					toolbarButtons: ['undo', 'redo' , 'bold', '|', 'clear', 'insert'],
+					saveURL: '/save'
+					});
+
+					function submit(action, method, values) {
+						var form = $('<form/>', {
+							action: action,
+							method: method
+						});
+						$.each(values, function() {
+							form.append($('<input/>', {
+								type: 'hidden',
+								name: this.name,
+								value: this.value
+							}));    
+						});
+						form.appendTo('body').submit();
+					}
+
+
+					$('#froala-saver').click (function () {
+						text = $(".fr-view").html();
+						submit('/save', 'POST', [
+    						{ name: 'body', value: text },
+						]);
+					})
+
+			})
+			</script>
+<!---		</div>
 		<div class="contract-footer"></div>
-		<a href = "{{ url_for('save_contract') }}"><button type="button" class="btn btn-default navbar-btn">Сохранить</button></a>
-	</div>
+	</div>-->
 </div>
 {% endblock %}

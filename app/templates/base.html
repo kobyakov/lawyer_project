@@ -11,17 +11,25 @@
 		<style>
     		@import "/static/styles.css";
     		@import "/static/contracts.css";
+			@import "/static/css/froala_editor.pkgd.min.css";
+			@import "/static/css/froala_style.min.css";
 		</style>
     	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     	<script type="text/javascript" src="/static/js/jquery.livequery.js"></script>
-	</head>
+		<!-- Include external CSS. -->
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
+	
+		<!-- Include Editor style. -->
+		
+		</head>
 	<body>
 	<!--<div class = "container">-->
 		<nav class="navbar navbar-default navbar-noradius">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="{{ url_for('index') }}">
-						<p>Intellawyer</p>
+						<p>IntellectLawyer</p>
 					</a>
 				</div>
 				<div class="collapse navbar-collapse">
@@ -54,7 +62,7 @@
 		<div class="footer text-center">
 			<div class="container">
 			<span>
-				<p>&copy; Intellawyer 2015</p>
+				<p>&copy; IntellectLawyer 2017</p>
 			</span>
 			</div>
 		</div>

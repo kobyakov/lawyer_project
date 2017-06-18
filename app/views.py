@@ -4,13 +4,18 @@ from app import app, db, login_manager, principals, admin_permission, be_admin
 from models import Category, Type, Contract, User, ROLE_ADMIN, ROLE_USER
 from forms import AddCategory, AddType, AddContract, RegisterForm, LoginForm
 
-from flask import render_template, send_from_directory, url_for, flash, redirect, request, session, g
+from flask import render_template,  render_template_string, send_from_directory, make_response, url_for, flash, redirect, request, session, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext.principal import Principal, Identity, AnonymousIdentity, identity_loaded, identity_changed
 
 from webhelpers.text import urlify
 from transliterate import translit
+from bs4 import BeautifulSoup
+
 import os
+import re
+import html2text
+
 @login_manager.user_loader
 def user_loader(user_id):
 	return User.query.get(user_id)
@@ -171,6 +176,49 @@ def contracts(_category=None, _type=None, _contract=None):
 			title = u'Редактировать документ',
 			active = 'contracts',
 			contract_template = contract.contract_template,)
+
+@app.route('/editor')
+def editor():
+	return render_template(
+		'editor.html',
+		title = u'Редактировать документ',
+		active = 'contracts',)
+
+@app.route('/save', methods = ['GET', 'POST'])
+def saver():
+	document = request.form['body']
+	html = render_template('pdf.html', document=document)
+
+
+
+	upload_dir = app.config['UPLOAD_FOLDER']
+	filename = "doc.txt"
+
+	result_html = html2text.html2text(html)
+	doc = open(os.path.join(upload_dir, filename), 'w')
+	doc.write(result_html.encode('utf-8'))
+	doc.close()
+
+	doc = open(os.path.join(upload_dir, filename), 'r')
+	html = doc.read()
+	doc.close()
+
+	result_html = html2text.html2text(html.decode('utf-8'))
+	doc = open(os.path.join(upload_dir, filename), 'w')
+	doc.write(result_html.encode('utf-8'))
+	doc.close()
+
+
+	return send_from_directory(directory=app.config['UPLOAD_FOLDER'], filename=filename)	
+
+
+@app.route('/download', methods = ['GET', 'POST'])
+def download():
+	response = make_response("test")
+	response.headers["Content-Disposition"] = "attachment; filename=books.csv"
+	response.headers["Content-Type"] = "text/html; charset=utf-8"
+	return response
+
 
 @app.route('/manage')
 @login_required
