@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>{doc</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<style type="text/css">
+    @page { size: A4; margin: 1cm; }
+    @font-face { font-family: Arial; src:"/static/arial.ttf"; }
+    body { font-size: 14px; line-height: 1em; font-family: Arial; }    
+    h3 { font-weight: bold; font-size: 18px; }
+</style>
+</head>
+<body>
+    &lt;p style=&#34;text-align: center;&#34;&gt;&lt;strong&gt;ДОГОВОР КУПЛИ-ПРОДАЖИ ТРАНСПОРТНОГО СРЕДСТВА (НОМЕРНОГО АГРЕГАТА)&amp;nbsp;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;г. ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;дата ____ &amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Мы, Продавец ____, паспорт серия ____ № ____, выдан ____, проживающий(ая) ____ и Покупатель ____, паспорт серия ____ № ____, выдан ____, проживающий(ая) ____ заключили настоящий договор купли-продажи транспортного средства о нижеследующем:&amp;nbsp;&lt;/p&gt;&lt;p&gt;Продавец продает принадлежащее ему транспортное средство (номерной агрегат):&amp;nbsp;&lt;/p&gt;&lt;p&gt;Идент. № (VIN): ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;Марка, модель: ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;Тип ТС: ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;№ двигателя: ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;Цвет: ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;№ кузова: ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;№ шасси (рамы): ____&lt;/p&gt;&lt;p&gt;Паспорт ТС № ____ выдан: ____&lt;/p&gt;&lt;p&gt;СТС № ____, выдан: ____&lt;/p&gt;&lt;p&gt;&amp;nbsp;Свидетельство регистрации авто: ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;Год выпуска: ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;Государственный регистрационный знак: ____&amp;nbsp;&lt;/p&gt;&lt;p&gt;стоимостью ____ и передает его в собственность Покупателю, а Покупатель принимает данное транспортное средство (номерной агрегат) и уплачивает его стоимость.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Продавец передает покупателю транспортное средство (номерной агрегат) свободным от любых прав третьих лиц.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Право собственности на транспортное средство (номерной агрегат) переходит к Покупателю с момента подписания настоящего договора. Транспортное средство (номерной агрегат) получил&lt;/p&gt;&lt;p&gt;&amp;nbsp;____________________________________ (подпись покупателя)&lt;/p&gt;&lt;p&gt;Деньги в сумме ____ получены&lt;/p&gt;&lt;p&gt;&amp;nbsp;____________________________________ (подпись продавца)&lt;/p&gt;
+</body>
+</html>
